@@ -15,7 +15,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif !important; /* Replaces the basic Apple/Windows font */
+    font-family: 'Poppins', sans-serif !important;
   }
 
    /* --- 2. Dynamic Weather Backgrounds (Day & Night) --- */
@@ -29,46 +29,45 @@
       background-position: center !important;
       background-attachment: fixed !important;
       background-repeat: no-repeat !important;
-      transition: background-image 0.8s ease-in-out;
+      transition: opacity 0.45s ease, filter 0.45s ease;
+      opacity: 0;
+      will-change: opacity, filter;
     }
 
-    /* DAY TIME IMAGES */
+    body.app-ready {
+      opacity: 1;
+    }
+
+    body.bg-fading {
+      filter: blur(1px) brightness(0.98);
+    }
+
     body.weather-clear { background-image: url('https://img.magnific.com/free-photo/montreal-day-view_649448-3875.jpg') !important; }
     body.weather-cloudy { background-image: url('https://static.vecteezy.com/system/resources/previews/017/728/330/large_2x/blue-clear-sky-in-summer-day-over-the-city-free-photo.jpg') !important; }
     body.weather-rain { background-image: url('https://media.istockphoto.com/id/498063665/photo/rainy-landscape.jpg') !important; }
     body.weather-storm { background-image: url('https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?q=80&w=1920&auto=format&fit=crop') !important; }
 
-    /* NIGHT TIME IMAGES (Active from 6 PM to 6 AM) */
     body.weather-clear-night { background-image: url('https://images.pexels.com/photos/16835186/pexels-photo-16835186/free-photo-of-stars-on-clear-night-sky.jpeg') !important; }
     body.weather-cloudy-night { background-image: url('https://t3.ftcdn.net/jpg/03/74/60/52/360_F_374605226_3zlXWUfx8NGav7j0JEXESiKaYqM7HagA.jpg') !important; }
     body.weather-rain-night { background-image: url('https://img.pikbest.com/ai/illus_our/20230426/57740a345cc5f78d74f7bd28a3ea2750.jpg!sw800') !important; }
-     /* --- 3. The Main Frosted Panel (Crystal Clear) --- */
+
     .container, #weatherPage, #predictionPage {
       padding: 10px 14px;
       max-width: 1000px;
       margin: auto;
       min-height: 100vh;
-      
-      /* THE FIX: Changed from dark gray to an almost invisible 5% white tint */
       background: rgba(255, 255, 255, 0.05) !important; 
-      
       backdrop-filter: blur(20px) !important;
       -webkit-backdrop-filter: blur(20px) !important; 
-      border: 1px solid rgba(255, 255, 255, 0.25) !important; /* Slightly brighter frosted edge */
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important; 
       border-radius: 16px;
       color: #ffffff !important; 
-      
-      /* Makes the text "pop" so it's readable no matter what color is behind it */
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8) !important; 
-      
       overflow-y: auto !important; 
       padding-bottom: 100px !important; 
     }
 
-/* --- 4. Inner Cards & Grid Layout --- */
-    
-    /* This is the magic rule that was missing! It puts them in a row. */
     .transport-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -77,7 +76,7 @@
     }
 
     .transport-card {
-      background: rgba(0, 0, 0, 0.45) !important; /* Smoked glass tint */
+      background: rgba(0, 0, 0, 0.45) !important;
       border: 1px solid rgba(255, 255, 255, 0.15) !important; 
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
       border-radius: 12px;
@@ -104,12 +103,11 @@
       opacity: 0.95;
     }
 
-    /* --- 5. Sleek Open App Buttons (Dark Mode) --- */
     .book-btn {
       display: block;
       margin-top: 15px;
       padding: 10px;
-      background: rgba(0, 0, 0, 0.5) !important; /* Dark button */
+      background: rgba(0, 0, 0, 0.5) !important;
       border: 1px solid rgba(255, 255, 255, 0.2) !important;
       color: white !important;
       border-radius: 8px;
@@ -124,7 +122,6 @@
       background: rgba(0, 0, 0, 0.8) !important;
     }
 
-    /* --- 6. Other UI Elements (Inputs, Headers, Buttons) --- */
     .top { text-align: center; margin-top: 4px; position: relative; }
     .time { font-size: 24px; font-weight: 500; margin-bottom: 6px; }
     .city { font-size: 38px; font-weight: 600; }
@@ -163,11 +160,19 @@
       border: 1px solid rgba(255,255,255,0.2); padding: 12px;
       border-radius: 18px; font-size: 15px; text-align: center; font-weight: bold;
     }
+
+    .recommendation-reason {
+      display: block;
+      margin-top: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0.9;
+      line-height: 1.35;
+    }
     
-   /* --- The Smoked Glass Forecast Box --- */
     .glass {
       margin-top: 15px; 
-      background: rgba(0, 0, 0, 0.45) !important; /* Matches the dark transport cards */
+      background: rgba(0, 0, 0, 0.45) !important;
       border: 1px solid rgba(255, 255, 255, 0.15) !important;
       border-radius: 22px; 
       padding: 15px; 
@@ -176,11 +181,10 @@
       text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9) !important;
     }
 
-    /* --- NEW: The Highlighted AI Prediction Box --- */
     .impact-box {
       margin-top: 25px;
       margin-bottom: 20px;
-      background: rgba(0, 0, 0, 0.65) !important; /* Even darker to draw the eye */
+      background: rgba(0, 0, 0, 0.65) !important;
       border: 1px solid rgba(255, 255, 255, 0.3) !important; 
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
       border-radius: 22px;
@@ -189,7 +193,7 @@
     }
 
     .section-title { 
-      font-size: 26px !important; /* Made the title massive */
+      font-size: 26px !important;
       margin-bottom: 8px; 
       font-weight: 700; 
       color: #ffffff;
@@ -203,17 +207,15 @@
       opacity: 0.9; 
     }
 
-    /* --- Dark Mode Input Field --- */
     input {
       width: 100%; margin-top: 10px; padding: 16px; border: none;
       border-radius: 16px; font-size: 18px; outline: none;
-      background: rgba(0, 0, 0, 0.5) !important; /* Dark text box */
+      background: rgba(0, 0, 0, 0.5) !important;
       color: white; 
       border: 1px solid rgba(255, 255, 255, 0.3);
     }
     input::placeholder { color: rgba(255, 255, 255, 0.6); }
 
-    /* --- Bold Predict Button --- */
     button, .save-btn, .back-btn {
       width: 100%; margin-top: 15px; padding: 16px; border: none;
       border-radius: 16px; font-size: 20px; font-weight: 700;
@@ -222,7 +224,7 @@
     button:hover, .save-btn:hover, .back-btn:hover {
       background: #e2e8f0; transform: translateY(-2px);
     }
-    /* --- Hourly Forecast Horizontal Layout --- */
+
     .hourly {
       display: flex;
       justify-content: space-between;
@@ -241,12 +243,29 @@
     }
     
     .emoji {
-      font-size: 26px; /* Makes the weather icons a bit larger! */
+      font-size: 26px;
       margin: 8px 0;
     }
     
     .hour-temp {
       font-size: 16px;
+      font-weight: 600;
+    }
+
+    /* --- Metro Stats Badge --- */
+    .metro-stats {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .metro-badge {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 13px;
       font-weight: 600;
     }
 </style>
@@ -263,7 +282,7 @@
       <div class="city" id="city">Bengaluru</div>
       <div class="temp" id="temp">31°</div>
       <div class="condition" id="condition">Partly Cloudy</div>
-      <div class="range">H:32° L:21°</div>
+      <div class="range" id="tempRange">H:-- L:--</div>
 
       <div class="edit-panel" id="editPanel">
         <input type="text" id="manualLocation" placeholder="Edit Location" />
@@ -274,18 +293,15 @@
 
     <div class="impact-box">
       <div class="section-title">Weather Impact Analysis</div>
-      <div class="forecast-text">AI predicts increased transport demand due to weather and traffic congestion.</div>
+      <div class="forecast-text" id="impactText">AI predicts increased transport demand due to weather and traffic congestion.</div>
       <input type="text" id="destination" placeholder="Enter destination (e.g., Majestic)">
-      <button id="predictBtn" onclick="applyCustomData(); generateTransport();">Predict Surge</button>    </div>
+      <button id="predictBtn" onclick="applyCustomData(); generateTransport();">Predict Surge</button>
+    </div>
 
     <div class="glass">
-      <div class="forecast-text">Rain expected during evening peak hours.</div>
-      <div class="hourly">
-        <div class="hour-card"><div class="hour">Now</div><div class="emoji">⛅</div><div class="hour-temp">31°</div></div>
-        <div class="hour-card"><div class="hour">3 PM</div><div class="emoji">☁️</div><div class="hour-temp">30°</div></div>
-        <div class="hour-card"><div class="hour">4 PM</div><div class="emoji">🌦️</div><div class="hour-temp">29°</div></div>
-        <div class="hour-card"><div class="hour">5 PM</div><div class="emoji">🌧️</div><div class="hour-temp">27°</div></div>
-        <div class="hour-card"><div class="hour">6 PM</div><div class="emoji">⛈️</div><div class="hour-temp">26°</div></div>
+      <div class="forecast-text" id="forecastSummary">Loading weather forecast...</div>
+      <div class="hourly" id="hourlyForecast">
+        <div class="hour-card"><div class="hour">Now</div><div class="emoji">⛅</div><div class="hour-temp">--°</div></div>
       </div>
     </div>
 
@@ -302,6 +318,9 @@
       <div class="section-title">Alternative Transport Modes</div>
       <div class="transport-grid" id="altGrid"></div>
       
+      <!-- Metro live stats from BMRC data -->
+      <div id="metroStatsBox" class="metro-stats hidden"></div>
+
       <div class="recommendation" id="recommendation">AI Recommendation</div>
       
       <button class="back-btn" onclick="goBack()">← Back</button>
@@ -311,18 +330,110 @@
 
 </div>
 <script>
+  // ─── CONFIG ───────────────────────────────────────────────────────────────
+  // Change this if your uvicorn runs on a different port
+  const API_BASE = "http://127.0.0.1:8000";
+  // ──────────────────────────────────────────────────────────────────────────
+
 window.customStartLocation = "";
+window.customStartCoords = null;
 let hourlyWeatherData = null;
+let currentWeatherClass = "";
+let weatherBackgroundInitialized = false;
+
+const WEATHER_BACKGROUND_MAP = {
+  "weather-clear": "https://img.magnific.com/free-photo/montreal-day-view_649448-3875.jpg",
+  "weather-cloudy": "https://static.vecteezy.com/system/resources/previews/017/728/330/large_2x/blue-clear-sky-in-summer-day-over-the-city-free-photo.jpg",
+  "weather-rain": "https://media.istockphoto.com/id/498063665/photo/rainy-landscape.jpg",
+  "weather-storm": "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?q=80&w=1920&auto=format&fit=crop",
+  "weather-clear-night": "https://images.pexels.com/photos/16835186/pexels-photo-16835186/free-photo-of-stars-on-clear-night-sky.jpeg",
+  "weather-cloudy-night": "https://t3.ftcdn.net/jpg/03/74/60/52/360_F_374605226_3zlXWUfx8NGav7j0JEXESiKaYqM7HagA.jpg",
+  "weather-rain-night": "https://img.pikbest.com/ai/illus_our/20230426/57740a345cc5f78d74f7bd28a3ea2750.jpg!sw800",
+};
+
+function preloadWeatherImages() {
+  Object.values(WEATHER_BACKGROUND_MAP).forEach((src) => {
+    const image = new Image();
+    image.src = src;
+  });
+}
+
+function getInitialWeatherClass() {
+  const hour = new Date().getHours();
+  return (hour >= 18 || hour < 6) ? "weather-clear-night" : "weather-clear";
+}
+
+function setWeatherBackground(weatherClass, immediate = false) {
+  const body = document.body;
+  const weatherClasses = Object.keys(WEATHER_BACKGROUND_MAP);
+
+  const applyClass = () => {
+    weatherClasses.forEach((cls) => body.classList.remove(cls));
+    body.classList.add(weatherClass);
+    currentWeatherClass = weatherClass;
+  };
+
+  if (immediate) {
+    applyClass();
+    body.classList.add("app-ready");
+    return;
+  }
+
+  if (weatherClass === currentWeatherClass) {
+    body.classList.add("app-ready");
+    return;
+  }
+
+  body.classList.add("bg-fading");
+  body.classList.remove("app-ready");
+
+  window.setTimeout(() => {
+    applyClass();
+    window.requestAnimationFrame(() => {
+      body.classList.add("app-ready");
+      body.classList.remove("bg-fading");
+    });
+  }, 180);
+}
 
 async function fetchRealWeather() {
   try {
-    const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=12.9716&longitude=77.5946&hourly=temperature_2m,weathercode&timezone=Asia%2FKolkata&forecast_days=1");
+    const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=12.9716&longitude=77.5946&hourly=temperature_2m,weathercode&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FKolkata&forecast_days=1");
     const data = await response.json();
     hourlyWeatherData = data.hourly;
+
+    // Show H/L from daily data
+    if (data.daily) {
+      const hi = Math.round(data.daily.temperature_2m_max[0]);
+      const lo = Math.round(data.daily.temperature_2m_min[0]);
+      document.getElementById("tempRange").innerText = `H:${hi}° L:${lo}°`;
+    }
+
     updateWeatherUI(new Date().getHours());
   } catch (error) {
-    console.log("Weather API failed.");
+    console.log("Weather API failed:", error);
+    setWeatherBackground(getInitialWeatherClass(), true);
+    weatherBackgroundInitialized = true;
   }
+}
+
+function requestCurrentLocation() {
+  if (!navigator.geolocation) {
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      window.customStartCoords = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+    },
+    (error) => {
+      console.log("Geolocation unavailable:", error);
+    },
+    { enableHighAccuracy: true, timeout: 5000, maximumAge: 60000 }
+  );
 }
 
 function updateWeatherUI(hourOfDay) {
@@ -331,13 +442,11 @@ function updateWeatherUI(hourOfDay) {
   const tempVal = Math.round(hourlyWeatherData.temperature_2m[hourOfDay]);
   const code = hourlyWeatherData.weathercode[hourOfDay];
   
- // NEW: Check if the hour is 6:00 PM (18) or later, OR before 6:00 AM (6)
   const isNight = (hourOfDay >= 18 || hourOfDay < 6);
 
   let conditionText = "Clear";
   let weatherClass = isNight ? "weather-clear-night" : "weather-clear"; 
 
-  // Decide the text AND the background based on Day/Night
   if (code >= 1 && code <= 3) {
     conditionText = "Cloudy";
     weatherClass = isNight ? "weather-cloudy-night" : "weather-cloudy";
@@ -348,49 +457,59 @@ function updateWeatherUI(hourOfDay) {
   }
   if (code >= 95 && code <= 99) {
     conditionText = "Storm";
-    weatherClass = "weather-storm"; // Storms look the same day or night!
-  }  // FIX: Update the HUGE temperature number
-  const bigTempEl = document.getElementById("temp");
-  if (bigTempEl) {
-    bigTempEl.innerHTML = `${tempVal}°`;
+    weatherClass = "weather-storm";
   }
 
-  // FIX: Only show the condition text (removed the duplicate temp)
-  const conditionEl = document.getElementById("condition");
-  if (conditionEl) {
-    conditionEl.innerHTML = conditionText;
+  document.getElementById("temp").innerHTML = `${tempVal}°`;
+  document.getElementById("condition").innerHTML = conditionText;
+  setWeatherBackground(weatherClass, !weatherBackgroundInitialized);
+  weatherBackgroundInitialized = true;
+
+  // Update impact text based on weather
+  const impactEl = document.getElementById("impactText");
+  const metroClosed = hourOfDay >= 23 || hourOfDay < 5;
+  if (code >= 95) {
+    impactEl.innerText = metroClosed
+      ? "⚠️ Storm alert! Metro is closed right now, so expect high auto cancellations and use Bike Taxi or Namma Yatri if needed."
+      : "⚠️ Storm alert! Expect high auto cancellations and surge pricing.";
+  } else if (code >= 51) {
+    impactEl.innerText = metroClosed
+      ? "🌧️ Rain detected. Metro is closed right now, so Bike Taxi or Namma Yatri are better options."
+      : "🌧️ Rain detected. AI predicts increased demand — metro recommended.";
+  } else {
+    impactEl.innerText = "AI predicts transport demand based on weather and traffic congestion.";
   }
 
-  // Change the website background image
-  document.body.className = weatherClass;
+  // Update forecast summary text
+  const hasFutureRain = hourlyWeatherData.weathercode
+    .slice(hourOfDay + 1, hourOfDay + 6)
+    .some(c => c >= 51);
+  document.getElementById("forecastSummary").innerText = hasFutureRain
+    ? "🌧️ Rain expected in the coming hours."
+    : "🌤️ Weather looks clear for the next few hours.";
 
-  // --- NEW: DYNAMIC HOURLY FORECAST (12-Hour Format) ---
-  const hourlyContainer = document.querySelector(".hourly");
+  // Dynamic hourly forecast cards
+  const hourlyContainer = document.getElementById("hourlyForecast");
   if (hourlyContainer) {
-    hourlyContainer.innerHTML = ""; // Clear the old dummy data
-    
-    // Loop through the next 5 hours
+    hourlyContainer.innerHTML = "";
     for (let i = 0; i < 5; i++) {
-      let targetHour = (hourOfDay + i) % 24; // Keeps it within 0-23
+      let targetHour = (hourOfDay + i) % 24;
       let targetTemp = Math.round(hourlyWeatherData.temperature_2m[targetHour]);
       let targetCode = hourlyWeatherData.weathercode[targetHour];
       
-      // Figure out the right emoji for this specific hour
       let emoji = "☀️";
       if (targetCode >= 1 && targetCode <= 3) emoji = "☁️";
       if (targetCode >= 51 && targetCode <= 82) emoji = "🌧️";
       if (targetCode >= 95 && targetCode <= 99) emoji = "⛈️";
 
-      // Convert 24-hour time to 12-hour AM/PM time
       let displayHour = "Now";
       if (i !== 0) {
         let ampm = targetHour >= 12 ? "PM" : "AM";
         let hour12 = targetHour % 12;
-        if (hour12 === 0) hour12 = 12; // Midnight or Noon
+        if (hour12 === 0) hour12 = 12;
         displayHour = `${hour12} ${ampm}`;
       }
 
-      // Inject the dynamic card into the HTML
       hourlyContainer.innerHTML += `
         <div class="hour-card">
           <div class="hour">${displayHour}</div>
@@ -401,6 +520,7 @@ function updateWeatherUI(hourOfDay) {
     }
   }
 }
+
 function updateTime(){
   const manualTime = document.getElementById("manualTime").value;
   if(manualTime !== "") return;
@@ -416,7 +536,9 @@ function updateTime(){
 
 setInterval(updateTime, 1000);
 updateTime();
+preloadWeatherImages();
 fetchRealWeather();
+requestCurrentLocation();
 
 function toggleEdit(){
   const panel = document.getElementById("editPanel");
@@ -430,11 +552,12 @@ function applyCustomData(){
   if(customLocation.trim() !== ""){
     document.getElementById("city").innerHTML = customLocation;
     window.customStartLocation = customLocation;
+    window.customStartCoords = null;
   }
 
   if(customTime !== ""){
     let parts = customTime.split(":");
-    let hour24 = parseInt(parts[0]); // The exact 24-hour number for the weather API
+    let hour24 = parseInt(parts[0]);
     let minute = parts[1];
 
     let ampm = hour24 >= 12 ? "PM" : "AM";                                        
@@ -442,8 +565,6 @@ function applyCustomData(){
     displayHour = displayHour ? displayHour : 12;
 
     document.getElementById("time").innerHTML = `${displayHour}:${minute} ${ampm} <span class="edit-icon" onclick="toggleEdit()">✎</span>`;
-    
-    // Pass the correct 24-hour time to the weather API
     updateWeatherUI(hour24);
   }
   document.getElementById("editPanel").style.display = "none";
@@ -459,6 +580,60 @@ function goBack(){
   document.getElementById("weatherPage").classList.remove("hidden");
 }
 
+function buildRecommendation(data, requestWeather) {
+  const weatherLabel = (data.live_weather && data.live_weather.label) || requestWeather || "";
+  const weatherText = weatherLabel.toLowerCase();
+  const metroLoad = data.metro_stats ? data.metro_stats.load_percent : 0;
+  const metroCongestion = data.metro_stats ? data.metro_stats.congestion : "";
+
+  const autoTravelTimes = (data.auto_apps || [])
+    .map((option) => Number(option.travel))
+    .filter((value) => Number.isFinite(value));
+  const fastestAuto = autoTravelTimes.length ? Math.min(...autoTravelTimes) : null;
+
+  const metroOption = (data.alternative_modes || []).find((option) => option.name === "Namma Metro");
+  const metroWait = metroOption ? metroOption.wait : null;
+  const metroClosed = metroWait === "CLOSED";
+
+  if (metroClosed) {
+    return {
+      summary: "Choose Bike Taxi or Namma Yatri",
+      reason: "Namma Metro is closed right now, so the open auto options are the most practical choice.",
+    };
+  }
+
+  if (/(storm|thunder|heavy rain|rain)/.test(weatherText)) {
+    return metroLoad >= 80
+      ? {
+          summary: "Use Namma Metro if possible",
+          reason: `Rain is slowing autos down, and the metro is crowded (${metroCongestion.toLowerCase()}).`,
+        }
+      : {
+          summary: "Namma Metro is the safest choice",
+          reason: "Rain is making autos less reliable right now.",
+        };
+  }
+
+  if (metroLoad >= 80) {
+    return {
+      summary: "Metro is crowded",
+      reason: `Crowding is high (${metroCongestion.toLowerCase()}), so a Bike Taxi may be quicker for a short trip.`,
+    };
+  }
+
+  if (fastestAuto !== null && fastestAuto <= 20) {
+    return {
+      summary: "Use Namma Yatri or Bike Taxi",
+      reason: `Traffic looks manageable, and the fastest auto is about ${fastestAuto} mins.`,
+    };
+  }
+
+  return {
+    summary: "Compare Metro and Auto",
+    reason: "Traffic is moderate, so the best option depends on metro wait time versus auto travel time.",
+  };
+}
+
 async function generateTransport() {
   const destination = document.getElementById("destination").value;
   if (destination.trim() === "") {
@@ -466,31 +641,32 @@ async function generateTransport() {
     return;
   }
 
-  // --- 1. START LOADING STATE ---
   const predictBtn = document.getElementById("predictBtn");
-  predictBtn.innerHTML = " Fetching BMRCL data..."; // Changes the button text
-  predictBtn.style.opacity = "0.7";                   // Dims the button
-  predictBtn.disabled = true;                         // Stops double-clicking
+  predictBtn.innerHTML = "FETCHING DATA...";
+  predictBtn.style.opacity = "0.7";
+  predictBtn.disabled = true;
 
   const timeString = document.getElementById("time").innerText.replace('✎', '').trim();
   const weatherString = document.getElementById("condition").innerText.replace('✎', '').trim();
-  const sourceLocation = window.customStartLocation || "Current Location";
 
   try {
-    const response = await fetch("https://auto-surge-predictor.onrender.com/api/predict", {
+    const response = await fetch(`${API_BASE}/api/predict`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        source: sourceLocation,
+        source: window.customStartLocation || "Current Location",
+        source_lat: window.customStartCoords ? window.customStartCoords.lat : null,
+        source_lng: window.customStartCoords ? window.customStartCoords.lng : null,
         destination: destination,
         time: timeString,
         weather_condition: weatherString,
       }),
     });
 
+    if (!response.ok) throw new Error(`Server error: ${response.status}`);
     const data = await response.json();
 
-    // Make Auto Apps cards
+    // ── Auto apps ──
     const autoGrid = document.getElementById("autoGrid");
     autoGrid.innerHTML = "";
     data.auto_apps.forEach((option) => {
@@ -500,14 +676,14 @@ async function generateTransport() {
           <div class="transport-info">
             ⏳ Wait: ${option.wait} mins<br><br>
             📍 Travel: ${option.travel} mins<br><br>
-            📈 Availability: ${option.probability}%
+            📈 Availability: ${option.probability}%<br><br>
           </div>
           <a href="${option.url}" target="_blank" class="book-btn">Open App ↗</a>
         </div>
       `;
     });
 
-    // Make Alternative Modes cards (Hiding buttons for Bus and Bike Taxi)
+    // ── Alternative modes ──
     const altGrid = document.getElementById("altGrid");
     altGrid.innerHTML = "";
     data.alternative_modes.forEach((option) => {
@@ -516,32 +692,62 @@ async function generateTransport() {
         buttonHtml = `<a href="${option.url}" target="_blank" class="book-btn">Open App ↗</a>`;
       }
 
+      // Show real BMRC congestion label on the metro card
+      let congestionHtml = "";
+      if (option.congestion) {
+        const color = option.congestion === "Very crowded" ? "#f87171"
+                    : option.congestion === "Moderate"     ? "#fbbf24"
+                    : "#34d399";
+        congestionHtml = `<br>🚇 Crowd: <span style="color:${color};font-weight:700">${option.congestion}</span>`;
+      }
+
       altGrid.innerHTML += `
         <div class="transport-card">
           <div class="transport-name">${option.name}</div>
           <div class="transport-info">
-            ⏳ Wait: ${option.wait}<br><br>
+            ⏳ Wait: ${option.wait} ${option.wait === "CLOSED" ? "" : "mins"}<br><br>
             📍 Travel: ${option.travel} mins<br><br>
             📈 Reliability: ${option.probability}%
+            ${congestionHtml}
           </div>
           ${buttonHtml}
         </div>
       `;
     });
 
-    document.getElementById("recommendation").innerHTML = "<strong>AI Recommendation:</strong> " + data.recommendation;
+    // ── Live BMRC metro stats badge ──
+    if (data.metro_stats) {
+      const ms = data.metro_stats;
+      const statsBox = document.getElementById("metroStatsBox");
+      statsBox.classList.remove("hidden");
+      statsBox.innerHTML = `
+        <div class="metro-badge">🚇 Metro load: ${ms.load_percent}%</div>
+        <div class="metro-badge">👥 ${ms.ridership_this_hour.toLocaleString()} riders/hr</div>
+        <div class="metro-badge">${ms.congestion}</div>
+      `;
+    }
 
-    // --- 2. SWITCH PAGES ONLY AFTER DATA IS READY ---
+    // ── Live weather from backend (temperature) ──
+    if (data.live_weather && data.live_weather.temperature_c !== null) {
+      document.getElementById("temp").innerHTML = `${Math.round(data.live_weather.temperature_c)}°`;
+      document.getElementById("condition").innerHTML = data.live_weather.label;
+    }
+
+    const recommendation = buildRecommendation(data, weatherString);
+    document.getElementById("recommendation").innerHTML =
+      `<strong>AI Recommendation:</strong> ${recommendation.summary}<span class="recommendation-reason">${recommendation.reason}</span>`;
+
     openPredictionPage();
 
   } catch (error) {
     console.error("Error:", error);
-    alert("Failed to connect to the AI Backend. Ensure the Python server is running.");
+    alert("Failed to connect to the AI Backend. Make sure uvicorn is running on port 8000.");
   } finally {
-    // --- 3. RESET THE BUTTON ---
     predictBtn.innerHTML = "Predict Surge";
     predictBtn.style.opacity = "1";
     predictBtn.disabled = false;
   }
 }
-</script> 
+</script>
+</body>
+</html>
